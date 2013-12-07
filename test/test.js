@@ -365,7 +365,24 @@ var steps = [
   rm(["naught.log", "stderr.log", "stdout.log", "server.js"]),
 ];
 
+function cleanUp() {
+  console.log("** Cleaning up previous tests content.")
+  deleteIfPresent(path.join(test_root, "stdout.log"));
+  deleteIfPresent(path.join(test_root, "stderr.log"));
+  deleteIfPresent(path.join(test_root, "naught.log"));
+  console.log("** Done cleaning up.")
+}
+
+function deleteIfPresent(filename) {
+  if (fs.existsSync(filename)) {
+    fs.unlinkSync(filename);
+  }
+}
+
 var step_count = steps.length;
+
+cleanUp();
+
 doStep();
 
 function doStep() {
